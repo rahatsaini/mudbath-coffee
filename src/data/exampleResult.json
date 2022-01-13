@@ -1,0 +1,26 @@
+﻿[
+  {
+    "user": "coach",
+    "order_total": 8.00,
+    "payment_total": 2.50,
+    "balance": 5.50
+  },
+  {
+    "user": "ellis",
+    "order_total": 3.25,
+    "payment_total": 3.25,
+    "balance": 0.00
+  },
+  {
+    "user": "rochelle",
+    "order_total": 4.50,
+    "payment_total": 4.50,
+    "balance": 0.00
+  },
+  {
+    "user": "zoey",
+    "order_total": 6.53,
+    "payment_total": 0.00,
+    "balance": 6.53
+  }
+]

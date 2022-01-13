@@ -1,0 +1,10 @@
+node_modules
+.env
+/.history
+/dist
+logs
+*.log
+npm-debug.log*
+#generated files
+src/config/version.ts
+.vercel

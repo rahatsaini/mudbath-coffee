@@ -1,0 +1,28 @@
+{
+  "name": "mudbath-coffee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahatsaini/mudbath-coffee.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rahatsaini/mudbath-coffee/issues"
+  },
+  "homepage": "https://github.com/rahatsaini/mudbath-coffee#readme",
+  "dependencies": {
+    "nodemon": "^2.0.15",
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.8"
+  }
+}
