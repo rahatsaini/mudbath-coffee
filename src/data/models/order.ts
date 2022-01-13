@@ -6,6 +6,6 @@ export class Order {
 }
 
 export class UserOrder extends Order {
-   price?: number = 0;
+   amount?: number = 0;
 }
 

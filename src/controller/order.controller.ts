@@ -39,13 +39,6 @@ work(){
 
   get PaymentOwed(){return this.paymentOwed;}
 
-  // getPriceList() {
-  //   console.log('getting PriceList for orders');
-  //   this.priceListController.readPriceList();
-  //   this.priceList = this.priceListController.Menu; 
-  //   console.log('getting PriceList for orders completed');
-  // }
-
   calculateTotal() {
     console.log('order => calculating total for orders');
     this.userOrders?.forEach((x) => {
@@ -55,7 +48,7 @@ work(){
       if (drink?.prices) {
         for (const [key, value] of Object.entries(drink.prices)) {
           if (key.toLowerCase() === x.size?.toLowerCase()) {
-            x.price = value;
+            x.amount = value;
           }
         }
       }
@@ -71,12 +64,12 @@ work(){
       this.userOrders.forEach(function(item, index) {
         if (res.length === 0 
             || !res.some(function(elem: any) {return elem.user === item.user}) ) {
-          res.push( { "user": item.user, "price": item.price})
+          res.push( { "user": item.user, "amount": item.amount})
         } else {
           for (var i = 0; i < res.length; i++) {
             if (res[i]["user"] === item["user"] 
-                && (res[i]["price"] !== 1 && item["price"] !== 1)) {
-              res[i]["price"] += item["price"]
+                && (res[i]["amount"] !== 1 && item["amount"] !== 1)) {
+              res[i]["amount"] += item["amount"]
             }
           }
         }
