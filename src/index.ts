@@ -1,6 +1,11 @@
-import { PriceListController } from './controller/pricelist.controller';
+import { MiddleWare } from "./controller/middleWare";
+
+
+const worker = new MiddleWare();
+worker.work();
 
 
 
-const pc = new PriceListController();
-pc.readPriceList();
+
+
+
