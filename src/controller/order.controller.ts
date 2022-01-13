@@ -9,26 +9,45 @@ export class OrderController {
   private orders: Order[] = [];
   private priceList: PriceList[] = [];
   private userOrders?: UserOrder[] = [];
-  private paymentOwed?: Payment[] =[];
-  private priceListController: PriceListController = new PriceListController();
-  constructor() {}
+  private paymentOwed: Payment[] =[];
+  //private priceListController: PriceListController = new PriceListController();
+  constructor(priceList: PriceList[]) {
+    this.priceList = priceList;
+  }
+
+work(){
+  const promise = new Promise((resolve, reject)=>{
+    this.readOrders();
+    resolve('');
+  });
+  promise.then(() =>{
+    this.calculateTotal();
+  }).then(()=>{
+    this.calculateTotalOwed();
+  });
+}
 
  readOrders() {
+    console.log('order => Reading orders');
     this.userOrders = data;
-    this.getPriceList();
+    console.log('order => Reading orders complete');
   }
 
   get Orders() {
     return this.orders;
   }
 
-  getPriceList() {
-    this.priceListController.readPriceList();
-    this.priceList = this.priceListController.Menu;
-    this.calculateTotal();
-  }
+  get PaymentOwed(){return this.paymentOwed;}
+
+  // getPriceList() {
+  //   console.log('getting PriceList for orders');
+  //   this.priceListController.readPriceList();
+  //   this.priceList = this.priceListController.Menu; 
+  //   console.log('getting PriceList for orders completed');
+  // }
 
   calculateTotal() {
+    console.log('order => calculating total for orders');
     this.userOrders?.forEach((x) => {
       const drink = this.priceList.find((p) => {
         return p.drink_name?.toLowerCase() == x.drink?.toLowerCase();
@@ -41,10 +60,12 @@ export class OrderController {
         }
       }
     });
-    this.calculateTotalOwed();
+    console.log('order => calculating total for orders completed');
+   
   }
 
   calculateTotalOwed(){
+    console.log('order => calculating total owed for orders');
     let res: any =[];
    if(this.userOrders) {
       this.userOrders.forEach(function(item, index) {
@@ -62,6 +83,7 @@ export class OrderController {
       });
       this.paymentOwed = res;
     }
+    console.log('order => calculating total owed for orders completed');
   }
 
 
