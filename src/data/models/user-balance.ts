@@ -1,6 +1,7 @@
 export class UserBalance{
-    name!: string;
-    userPaid!: number;
-    totalAmount!: number;
+    user!: string;
+    order_total!: number;
+    payment_total!: number;
     balance!: number;
 }
+
