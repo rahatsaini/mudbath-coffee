@@ -9,12 +9,13 @@ export class OrderController {
   private orders: Order[] = [];
   private priceList: PriceList[] = [];
   private userOrders?: UserOrder[] = [];
-  private paymentOwed: Payment[] =[];
+  private paymentOwed?: Payment[] =[];
   private priceListController: PriceListController = new PriceListController();
   constructor() {}
 
-  readOrders() {
+ readOrders() {
     this.userOrders = data;
+    this.getPriceList();
   }
 
   get Orders() {
@@ -24,6 +25,7 @@ export class OrderController {
   getPriceList() {
     this.priceListController.readPriceList();
     this.priceList = this.priceListController.Menu;
+    this.calculateTotal();
   }
 
   calculateTotal() {
@@ -58,9 +60,7 @@ export class OrderController {
           }
         }
       });
-      console.log(res);
       this.paymentOwed = res;
-      
     }
   }
 
