@@ -9,7 +9,6 @@ export class PriceListController {
 
     readPriceList(){
       this.menu = data;
-      console.log(this.menu);
     }
    
     get Menu(){return this.menu;}
