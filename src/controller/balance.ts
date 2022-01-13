@@ -10,7 +10,7 @@ export class BalanceController{
     
     constructor(paymentOwed: Payment[], totalPayments: Payment[]){
         this.paymentOwed = paymentOwed;
-        this.totalPayments = totalPayments;
+        this.totalPayments = totalPayments;   
     }
 
 
@@ -25,10 +25,10 @@ export class BalanceController{
         })
     }
 
-     populateTotalPayments() {
+     private populateTotalPayments() {
          console.log('balance => populating total payments');
         this.totalPayments.forEach( x=> {
-            let ub!: UserBalance;
+            let ub: UserBalance = new UserBalance();
             ub.user = x.user;
             ub.payment_total = x.amount;
             this.userBalance.push(ub);
@@ -36,13 +36,14 @@ export class BalanceController{
         console.log('balance => populating total payments done');
     }
 
-    populateUserBalanceOwed() {
+    private populateUserBalanceOwed() {
         console.log('balance => populating total owed');
         this.userBalance.forEach( x => {
-            const owed = this.paymentOwed?.find( p => p.user === x.user )?.amount;
+            const owed = this.paymentOwed?.find( p => p.user === x.user );
+            console.log(owed);
             if(owed)
             {
-                x.order_total = owed;
+                x.order_total = owed.amount;
                 x.balance = x.payment_total - x.order_total;
             }
         });
