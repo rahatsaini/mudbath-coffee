@@ -1,17 +1,6 @@
 import { BalanceController } from "../controller/balance";
-import { PaymentController } from "../controller/payments.controller";
-
-2
-3
-4
-5
 
 
-test('string with a single number should result in the number itself', () => {
-    
-  })
-
- 
 test('should return a user balance', () => {
     const balanceController = new BalanceController();
         const owed = [
@@ -38,5 +27,5 @@ test('should return a user balance', () => {
         return balanceController.calculateTotal(owed, paid).then((data) =>{
             expect(data).toEqual(expectedResult);
         })
-        //expect(balanceController.calculateTotal(owed, paid)).toBe(expectedResult);
+        
   });
