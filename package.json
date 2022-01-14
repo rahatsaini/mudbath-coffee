@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p .",
-    "start": "npm run build && npm run test && npm run dev",
+    "start": "npm run build && npm run dev",
     "start-app": "node dist/index.js",
     "dev": "nodemon src/index.ts",
+    "test-app": "npm run build && npm run test",
     "test": "jest"
   },
   "repository": {
