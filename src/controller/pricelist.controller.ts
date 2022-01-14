@@ -14,7 +14,7 @@ export class PriceListController {
   }
 
   async readPriceList(): Promise<PriceList[]> {
-    console.log("priceList => reading price list data");
+    console.info("priceList => reading price list data");
     return data;
   }
 

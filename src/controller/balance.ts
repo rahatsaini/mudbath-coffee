@@ -22,7 +22,7 @@ export class BalanceController {
   async populateTotalPayments(
     totalPayments: Payment[]
   ): Promise<UserBalance[]> {
-    console.log("balance => populating total payments");
+    console.info("balance => populating total payments");
     let res: any = [];
     totalPayments.forEach((x) => {
       let ub: UserBalance = new UserBalance();
@@ -31,7 +31,7 @@ export class BalanceController {
       res.push(ub);
     });
 
-    console.log("balance => populating total payments done");
+    console.info("balance => populating total payments done");
     return res;
   }
 
@@ -39,7 +39,7 @@ export class BalanceController {
     userBalance: UserBalance[],
     paymentOwed: Payment[]
   ): Promise<UserBalance[]> {
-    console.log("balance => populating total owed");
+    console.info("balance => populating total owed");
     userBalance.forEach((x) => {
       const owed = paymentOwed.find((p) => p.user === x.user);
       if (owed) {
@@ -47,7 +47,7 @@ export class BalanceController {
         x.balance = x.payment_total - x.order_total;
       }
     });
-    console.log("balance => populating total owed done");
+    console.info("balance => populating total owed done");
     return userBalance;
   }
 }

@@ -17,13 +17,13 @@ export class PaymentController {
   }
 
   async readPayments(): Promise<Payment[]> {
-    console.log("payment => reading payment data");
-    console.log("payment => reading payment data completed");
+    console.info("payment => reading payment data");
+    console.info("payment => reading payment data completed");
     return data;
   }
 
   async calculateTotalForEachUser(payments: Payment[]): Promise<Payment[]> {
-    console.log("payment => calculating total for each user");
+    console.info("payment => calculating total for each user");
     let res: any = [];
     payments.forEach(function (item, index) {
       if (
@@ -45,7 +45,7 @@ export class PaymentController {
         }
       }
     });
-    console.log("payment => calculating total for each user completed");
+    console.info("payment => calculating total for each user completed");
     return res;
   }
 
