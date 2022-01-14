@@ -22,11 +22,11 @@ export class MiddleWare {
      const paymentOwed = this.orderController?.PaymentOwed;
      const totalPayments = this.paymentsController.TotalPayments;
         if (paymentOwed && totalPayments) {
-          this.balanceController = new BalanceController(
-            paymentOwed,
-            totalPayments
-          );
-          this.balanceController.calculateTotal();
+          this.balanceController = new BalanceController();
+          const readUserBalanceAsync = this.balanceController.calculateTotal(paymentOwed, totalPayments);
+          readUserBalanceAsync.then((data) =>{
+            console.log(data);
+          })
         }   
   }
 }

@@ -12,7 +12,7 @@ export class PaymentController {
     async mainAsync(){
       try{
         await this.readPayments();
-        await this.calculateTotalForEachUser();
+        this.totalPayments= await this.calculateTotalForEachUser(this.payments);
       }
       catch(e)
       {
@@ -26,10 +26,10 @@ export class PaymentController {
       console.log('payment => reading payment data completed');
     }
    
-   async calculateTotalForEachUser(){
+   async calculateTotalForEachUser(payments: Payment[]): Promise<Payment[]>{
       console.log('payment => calculating total for each user');
       let res: any =[];
-      this.Payments.forEach(function(item, index) {
+      payments.forEach(function(item, index) {
         if (res.length === 0 
             || !res.some(function(elem: any) {return elem.user === item.user}) ) {
           res.push(item)
@@ -42,8 +42,8 @@ export class PaymentController {
           }
         }
       });
-      this.totalPayments = res;
-      console.log('payment => calculating total for each user completed');
+       console.log('payment => calculating total for each user completed');
+       return res;
   
 }
 

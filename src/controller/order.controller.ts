@@ -8,7 +8,7 @@ import { PriceList } from "../data/models/priceList";
 export class OrderController {
   private orders: Order[] = [];
   private priceList: PriceList[] = [];
-  private userOrders?: UserOrder[] = [];
+  private userOrders: UserOrder[] = [];
   private paymentOwed: Payment[] = [];
   constructor(priceList: PriceList[]) {
     this.priceList = priceList;
@@ -17,8 +17,8 @@ export class OrderController {
   async mainAsync() {
     try {
       await this.readOrders();
-      await this.calculateTotal();
-      await this.calculateTotalOwed();
+      this.userOrders = await this.calculateTotal(this.userOrders);
+      this.paymentOwed = await this.calculateTotalOwed(this.userOrders);
     } catch (e) {
       console.error(e);
     }
@@ -38,9 +38,9 @@ export class OrderController {
     return this.paymentOwed;
   }
 
-  async calculateTotal() {
+  async calculateTotal(userOrders: UserOrder[]): Promise<UserOrder[]> {
     console.log("order => calculating total for orders");
-    this.userOrders?.forEach((x) => {
+    userOrders.forEach((x) => {
       const drink = this.priceList.find((p) => {
         return p.drink_name?.toLowerCase() == x.drink?.toLowerCase();
       });
@@ -53,13 +53,14 @@ export class OrderController {
       }
     });
     console.log("order => calculating total for orders completed");
+    return  userOrders;
   }
 
-  async calculateTotalOwed() {
+  async calculateTotalOwed(userOrders: UserOrder[]): Promise<Payment[]> {
     console.log("order => calculating total owed for orders");
     let res: any = [];
-    if (this.userOrders) {
-      this.userOrders.forEach(function (item, index) {
+    if (userOrders) {
+      userOrders.forEach(function (item, index) {
         if (
           res.length === 0 ||
           !res.some(function (elem: any) {
@@ -79,8 +80,9 @@ export class OrderController {
           }
         }
       });
-      this.paymentOwed = res;
+      
     }
     console.log("order => calculating total owed for orders completed");
+    return res;
   }
 }
