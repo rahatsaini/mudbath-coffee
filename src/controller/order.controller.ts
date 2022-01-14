@@ -9,38 +9,37 @@ export class OrderController {
   private orders: Order[] = [];
   private priceList: PriceList[] = [];
   private userOrders?: UserOrder[] = [];
-  private paymentOwed: Payment[] =[];
-  //private priceListController: PriceListController = new PriceListController();
+  private paymentOwed: Payment[] = [];
   constructor(priceList: PriceList[]) {
     this.priceList = priceList;
   }
 
-work(){
-  const promise = new Promise((resolve, reject)=>{
-    this.readOrders();
-    resolve('');
-  });
-  promise.then(() =>{
-    this.calculateTotal();
-  }).then(()=>{
-    this.calculateTotalOwed();
-  });
-}
+  async mainAsync() {
+    try {
+      await this.readOrders();
+      await this.calculateTotal();
+      await this.calculateTotalOwed();
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
- readOrders() {
-    console.log('order => Reading orders');
+  async readOrders() {
+    console.log("order => Reading orders");
     this.userOrders = data;
-    console.log('order => Reading orders complete');
+    console.log("order => Reading orders complete");
   }
 
   get Orders() {
     return this.orders;
   }
 
-  get PaymentOwed(){return this.paymentOwed;}
+  get PaymentOwed() {
+    return this.paymentOwed;
+  }
 
-  calculateTotal() {
-    console.log('order => calculating total for orders');
+  async calculateTotal() {
+    console.log("order => calculating total for orders");
     this.userOrders?.forEach((x) => {
       const drink = this.priceList.find((p) => {
         return p.drink_name?.toLowerCase() == x.drink?.toLowerCase();
@@ -53,31 +52,35 @@ work(){
         }
       }
     });
-    console.log('order => calculating total for orders completed');
-   
+    console.log("order => calculating total for orders completed");
   }
 
-  calculateTotalOwed(){
-    console.log('order => calculating total owed for orders');
-    let res: any =[];
-   if(this.userOrders) {
-      this.userOrders.forEach(function(item, index) {
-        if (res.length === 0 
-            || !res.some(function(elem: any) {return elem.user === item.user}) ) {
-          res.push( { "user": item.user, "amount": item.amount})
+  async calculateTotalOwed() {
+    console.log("order => calculating total owed for orders");
+    let res: any = [];
+    if (this.userOrders) {
+      this.userOrders.forEach(function (item, index) {
+        if (
+          res.length === 0 ||
+          !res.some(function (elem: any) {
+            return elem.user === item.user;
+          })
+        ) {
+          res.push({ user: item.user, amount: item.amount });
         } else {
           for (var i = 0; i < res.length; i++) {
-            if (res[i]["user"] === item["user"] 
-                && (res[i]["amount"] !== 1 && item["amount"] !== 1)) {
-              res[i]["amount"] += item["amount"]
+            if (
+              res[i]["user"] === item["user"] &&
+              res[i]["amount"] !== 1 &&
+              item["amount"] !== 1
+            ) {
+              res[i]["amount"] += item["amount"];
             }
           }
         }
       });
       this.paymentOwed = res;
     }
-    console.log('order => calculating total owed for orders completed');
+    console.log("order => calculating total owed for orders completed");
   }
-
-
 }

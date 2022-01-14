@@ -7,8 +7,10 @@ export class PriceListController {
     constructor(){
     }
 
-    readPriceList(){
+    async readPriceList(){
+      console.log('pricelist => reading price list data');
       this.menu = data;
+      console.log('pricelist => reading price list data done');
     }
    
     get Menu(){return this.menu;}

@@ -2,29 +2,31 @@
 import { Payment } from '../data/models/payment';
 import data from '../data/payments.json';
 import * as _ from "lodash"
+import { captureRejections } from 'events';
 export class PaymentController {
     private payments: Payment[] = [];
     private totalPayments: Payment[] = [] ;
     constructor(){
     }
     
-    work(){
-      const promise = new Promise((resolve,reject) =>{
-        this.readPayments();
-        resolve('');
-      });
-      promise.then(()=>{
-        this.calculateTotalForEachUser();
-      });
+    async mainAsync(){
+      try{
+        await this.readPayments();
+        await this.calculateTotalForEachUser();
+      }
+      catch(e)
+      {
+        console.error(`error in payment controller: ${e}`)
+      }
     }
 
-    readPayments(){
+    async readPayments(){
       console.log('payment => reading payment data');
       this.payments = data;
       console.log('payment => reading payment data completed');
     }
    
-    calculateTotalForEachUser(){
+   async calculateTotalForEachUser(){
       console.log('payment => calculating total for each user');
       let res: any =[];
       this.Payments.forEach(function(item, index) {
