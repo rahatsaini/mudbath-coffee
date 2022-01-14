@@ -11,7 +11,7 @@ export class PaymentController {
     
     async mainAsync(){
       try{
-        await this.readPayments();
+        this.payments = await this.readPayments();
         this.totalPayments= await this.calculateTotalForEachUser(this.payments);
       }
       catch(e)
@@ -20,10 +20,11 @@ export class PaymentController {
       }
     }
 
-    async readPayments(){
+    async readPayments(): Promise<Payment[]>{
       console.log('payment => reading payment data');
-      this.payments = data;
       console.log('payment => reading payment data completed');
+      return data;
+      
     }
    
    async calculateTotalForEachUser(payments: Payment[]): Promise<Payment[]>{
