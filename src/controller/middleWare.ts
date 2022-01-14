@@ -3,23 +3,24 @@ import { OrderController } from "./order.controller";
 import { PaymentController } from "./payments.controller";
 import { PriceListController } from "./pricelist.controller";
 
+
 export class MiddleWare {
   pc: PriceListController = new PriceListController();
 
-  order?: OrderController;
+  orderController?: OrderController;
 
-  payments = new PaymentController();
+  paymentsController = new PaymentController();
 
   balanceController?: BalanceController;
   constructor() {}
 
   async work() {
      this.pc.readPriceList();
-     this.order = new OrderController(this.pc.Menu);
-     await this.order.mainAsync();
-     await this.payments.mainAsync();
-     const paymentOwed = this.order?.PaymentOwed;
-     const totalPayments = this.payments.TotalPayments;
+     this.orderController = new OrderController(this.pc.Menu);
+     await this.orderController.mainAsync();
+     await this.paymentsController.mainAsync();
+     const paymentOwed = this.orderController?.PaymentOwed;
+     const totalPayments = this.paymentsController.TotalPayments;
         if (paymentOwed && totalPayments) {
           this.balanceController = new BalanceController(
             paymentOwed,
