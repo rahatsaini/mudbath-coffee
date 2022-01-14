@@ -1,18 +1,24 @@
-
-import { PriceList } from '../data/models/priceList';
-import data from '../data/prices.json';
+import { PriceList } from "../data/models/priceList";
+import data from "../data/prices.json";
 
 export class PriceListController {
-    private menu: PriceList[] = [];
-    constructor(){
-    }
+  private menu: PriceList[] = [];
+  constructor() {}
 
-    async readPriceList(){
-      console.log('pricelist => reading price list data');
-      this.menu = data;
-      console.log('pricelist => reading price list data done');
+  async mainAsync() {
+    try {
+      this.menu = await this.readPriceList();
+    } catch (e) {
+      console.error(`error in price list controller: ${e}`);
     }
-   
-    get Menu(){return this.menu;}
+  }
 
+  async readPriceList(): Promise<PriceList[]> {
+    console.log("priceList => reading price list data");
+    return data;
+  }
+
+  get Menu() {
+    return this.menu;
+  }
 }
