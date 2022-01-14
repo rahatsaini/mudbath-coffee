@@ -17,7 +17,7 @@ export class OrderController {
   async mainAsync() {
     try {
       this.orders = await this.readOrders();
-      this.userOrders = await this.calculateTotal(this.userOrders);
+      this.userOrders = await this.calculateTotal(this.orders);
       this.paymentOwed = await this.calculateTotalOwed(this.userOrders);
     } catch (e) {
       console.error(`error in orders controller: ${e}`);
@@ -39,10 +39,12 @@ export class OrderController {
 
   async calculateTotal(userOrders: UserOrder[]): Promise<UserOrder[]> {
     console.log("order => calculating total for orders");
+    console.log(userOrders);
     userOrders.forEach((x) => {
       const drink = this.priceList.find((p) => {
-        return p.drink_name?.toLowerCase() == x.drink?.toLowerCase();
+        return p.drink_name?.toLowerCase() === x.drink?.toLowerCase();
       });
+      console.log(`drink => ${x.drink}`)
       if (drink?.prices) {
         for (const [key, value] of Object.entries(drink.prices)) {
           if (key.toLowerCase() === x.size?.toLowerCase()) {
@@ -52,10 +54,12 @@ export class OrderController {
       }
     });
     console.log("order => calculating total for orders completed");
+    
     return userOrders;
   }
 
   async calculateTotalOwed(userOrders: UserOrder[]): Promise<Payment[]> {
+    
     console.log("order => calculating total owed for orders");
     let res: any = [];
     if (userOrders) {
@@ -80,6 +84,7 @@ export class OrderController {
         }
       });
     }
+    console.log(res);
     console.log("order => calculating total owed for orders completed");
     return res;
   }

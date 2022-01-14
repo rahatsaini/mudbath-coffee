@@ -15,7 +15,7 @@ export class MiddleWare {
   constructor() {}
 
   async work() {
-     this.pc.readPriceList();
+     await this.pc.mainAsync();
      this.orderController = new OrderController(this.pc.Menu);
      await this.orderController.mainAsync();
      await this.paymentsController.mainAsync();
