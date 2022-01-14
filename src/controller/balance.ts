@@ -40,7 +40,6 @@ export class BalanceController{
         console.log('balance => populating total owed');
         this.userBalance.forEach( x => {
             const owed = this.paymentOwed?.find( p => p.user === x.user );
-            console.log(owed);
             if(owed)
             {
                 x.order_total = owed.amount;
