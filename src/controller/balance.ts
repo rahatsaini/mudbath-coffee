@@ -1,53 +1,53 @@
 import { Payment } from "../data/models/payment";
 import { UserBalance } from "../data/models/user-balance";
-import { OrderController } from "./order.controller";
-import { PaymentController } from "./payments.controller";
 
-export class BalanceController{
-    private userBalance: UserBalance[] = [];
-    private paymentOwed?: Payment[] =[];
-    
-    constructor(){}
-     get UserBalance(): UserBalance[]{
-         return this.userBalance;
-     }
+export class BalanceController {
+  private userBalance: UserBalance[] = [];
 
-    async calculateTotal( paymentOwed: Payment[], totalPayments: Payment[]){
-        this.userBalance = await this.populateTotalPayments(totalPayments);
-        this.userBalance = await this.populateUserBalanceOwed(this.userBalance, paymentOwed); 
-        return this.userBalance;
-    }
+  constructor() {}
 
-    async populateTotalPayments(totalPayments: Payment[]): Promise<UserBalance[]>  {
-         console.log('balance => populating total payments');
-         let res: any =[];
-         totalPayments.forEach( x=> {
-            let ub: UserBalance = new UserBalance();
-            ub.user = x.user;
-            ub.payment_total = x.amount;
-            res.push(ub);
-        });
+  get UserBalance(): UserBalance[] {
+    return this.userBalance;
+  }
 
-        console.log('balance => populating total payments done');
-        return res;
-    }
+  async calculateTotal(paymentOwed: Payment[], totalPayments: Payment[]) {
+    this.userBalance = await this.populateTotalPayments(totalPayments);
+    this.userBalance = await this.populateUserBalanceOwed(
+      this.userBalance,
+      paymentOwed
+    );
+    return this.userBalance;
+  }
 
-    async populateUserBalanceOwed(userBalance: UserBalance[], paymentOwed: Payment[]): Promise<UserBalance[]> {
-        console.log('balance => populating total owed');
-        userBalance.forEach( x => {
-            const owed = paymentOwed.find( p => p.user === x.user );
-            if(owed)
-            {
-                x.order_total = owed.amount;
-                x.balance = x.payment_total - x.order_total;
-            }
-        });
-        console.log('balance => populating total owed done');
-        return userBalance;
-    }
+  async populateTotalPayments(
+    totalPayments: Payment[]
+  ): Promise<UserBalance[]> {
+    console.log("balance => populating total payments");
+    let res: any = [];
+    totalPayments.forEach((x) => {
+      let ub: UserBalance = new UserBalance();
+      ub.user = x.user;
+      ub.payment_total = x.amount;
+      res.push(ub);
+    });
 
+    console.log("balance => populating total payments done");
+    return res;
+  }
 
-
-
-    
+  async populateUserBalanceOwed(
+    userBalance: UserBalance[],
+    paymentOwed: Payment[]
+  ): Promise<UserBalance[]> {
+    console.log("balance => populating total owed");
+    userBalance.forEach((x) => {
+      const owed = paymentOwed.find((p) => p.user === x.user);
+      if (owed) {
+        x.order_total = owed.amount;
+        x.balance = x.payment_total - x.order_total;
+      }
+    });
+    console.log("balance => populating total owed done");
+    return userBalance;
+  }
 }

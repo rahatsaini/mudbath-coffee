@@ -16,18 +16,17 @@ export class OrderController {
 
   async mainAsync() {
     try {
-      await this.readOrders();
+      this.orders = await this.readOrders();
       this.userOrders = await this.calculateTotal(this.userOrders);
       this.paymentOwed = await this.calculateTotalOwed(this.userOrders);
     } catch (e) {
-      console.error(e);
+      console.error(`error in orders controller: ${e}`);
     }
   }
 
-  async readOrders() {
+  async readOrders(): Promise<Order[]> {
     console.log("order => Reading orders");
-    this.userOrders = data;
-    console.log("order => Reading orders complete");
+    return data;
   }
 
   get Orders() {
@@ -53,7 +52,7 @@ export class OrderController {
       }
     });
     console.log("order => calculating total for orders completed");
-    return  userOrders;
+    return userOrders;
   }
 
   async calculateTotalOwed(userOrders: UserOrder[]): Promise<Payment[]> {
@@ -80,7 +79,6 @@ export class OrderController {
           }
         }
       });
-      
     }
     console.log("order => calculating total owed for orders completed");
     return res;
